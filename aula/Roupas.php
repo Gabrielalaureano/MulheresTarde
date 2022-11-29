@@ -12,7 +12,13 @@
     <div class="container-fluid imagens">
         <div class="row">
             <div class="col-md-4">
-                <img src="imagens/lookacademia1.jpg" class="img-fluid">
+            <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="imagens/lookacademia4.jpg" >
+            <div class="card-body">
+                <h2 class="card-text">conjunto primavera</h2>
+                <h3> R$ 150,00</h3>
+            </div>
+</div>
             </div>
 
             <div class="col-md-4">

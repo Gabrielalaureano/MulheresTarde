@@ -29,3 +29,8 @@
 .sociais{
     padding:20px;
 }
+/** altera a fonte do card**/
+
+.card-text{
+    font-size: 10%;
+}
