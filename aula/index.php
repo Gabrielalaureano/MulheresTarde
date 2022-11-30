@@ -71,7 +71,8 @@
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Modi porro repudiandae ea rerum ullam molestias enim exercitationem eveniet assumenda. Ipsum repellendus delectus est ratione exercitationem quod odit vel cum a!</p>
           </div>
           
-         <? require_once 'footer.php';
+         <?php 
+         require_once 'footer.php';
            ?>
        
       

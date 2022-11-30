@@ -28,10 +28,12 @@
                 Loja
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="Roupas.html">Roupas</a>
-                <a class="dropdown-item" href="Suplementos.html">Suplementos</a>
-                <a class="dropdown-item" href="Diversos.html">Diversos</a>
+                <a class="dropdown-item" href="Roupas.php">Roupas</a>
+                <a class="dropdown-item" href="Suplementos.php">Suplementos</a>
+                <a class="dropdown-item" href="Diversos.php">Diversos</a>
                 
               </div>
             </li>
+          </ul>
+            </div>
       </nav>

@@ -1,6 +1,6 @@
 <?php
-    required_once 'head.php'
-    require_once 'menu.php'
+    require_once 'head.php';
+    require_once 'menu.php';
     ?>
 
     <div class="container-fluid">
@@ -28,5 +28,5 @@
     </div>
 
     <?php
-    require_once 'footer.php'
+    require_once 'footer.php';
     ?>
