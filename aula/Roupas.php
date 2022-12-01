@@ -12,26 +12,30 @@
 
     <div class="container-fluid imagens">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                     <div class="card" style="width: 16rem;">
                         <img class="card-img-top" src="imagens/lookacademia1.jpg" >
                         <div class="card-body">
                             <h3 class="card-text">conjunto primavera</h3>
                             <h5> R$ 150,00</h5>
-                            <button type="button" class="btn-btn-primary" data-toggle="modal" data target="primavera">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#primavera">
                                 COMPRAR
                             </button>
+                           
+  
                         </div>
                  </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card" style="width: 16rem;">
                     <img class="card-img-top" src="imagens/lookacademia2.jpg" >
                     <div class="card-body">
                         <h3 class="card-text">conjunto verão</h3>
                         <h5> R$ 150,00</h5>
-                        <button type="button" class="btn-btn-primary" data-toggle="modal" data target="verão">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" 
+                        data-target="#verão">
                                 COMPRAR
                             </button>
                     </div>
@@ -40,26 +44,28 @@
 
 
 
-            <div class="col-md-3">
+            <div class="col-md-3 text-center">
                 <div class="card" style="width: 16rem;">
                     <img class="card-img-top" src="imagens/lookacademia3.jpg" >
                         <div class="card-body">
                             <h3 class="card-text">conjunto outono</h3>
                             <h5> R$ 150,00</h5>
-                            <button type="button" class="btn-btn-primary" data-toggle="modal" data target="outono">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#outono">
                                 COMPRAR
                             </button>
                         </div>
                 </div>
          </div>
 
-         <div class="col-md-3">
+         <div class="col-md-3 text-center">
                 <div class="card" style="width: 16rem;">
                     <img class="card-img-top" src="imagens/lookacademia4.jpg" >
                         <div class="card-body">
                             <h3 class="card-text">conjunto inverno</h3>
                             <h5> R$ 150,00</h5>
-                            <button type="button" class="btn-btn-primary" data-toggle="modal" data target="inverno">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" 
+                            data-target="#inverno">
                                 COMPRAR
                             </button>
                         </div>
@@ -84,7 +90,7 @@
       </div>
       <div class="modal-body">
         <img class="img-fluid" src="imagens/lookacademia1.jpg" alt="imagem capa do card">
-        <p>cropped marmorizado,calça gym.</p>
+        <p>conjunto vermelho marshalla.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -93,7 +99,7 @@
     </div>
   </div>
 </div>
- <!--modal 2-->
+  <!--modal2-->
 <div class="modal fade" id="verão" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -105,7 +111,7 @@
       </div>
       <div class="modal-body">
         <img class="img-fluid" src="imagens/lookacademia2.jpg" alt="imagem capa do card">
-        <p>cropped marmorizado,calça gym.</p>
+        <p>Top e calça em estampa sereia.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -127,7 +133,7 @@
       </div>
       <div class="modal-body">
         <img class="img-fluid" src="imagens/lookacademia3.jpg" alt="imagem capa do card">
-        <p>cropped marmorizado,calça gym.</p>
+        <p>top,short na cor salmão.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -149,7 +155,7 @@
       </div>
       <div class="modal-body">
         <img class="img-fluid" src="imagens/lookacademia4.jpg" alt="imagem capa do card">
-        <p>cropped marmorizado,calça gym.</p>
+        <p> top,calça na cor preta </P>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
