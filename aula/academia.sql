@@ -1,10 +1,10 @@
 
 
-drop database if exists academia1; 
+drop database if exists academia; 
 
-create database academia1 character set utf8 COLLATE utf8_general_ci;
+create database academia character set utf8 COLLATE utf8_general_ci;
 
-use academia1;
+use academia;
 
 create table endereco(
 	cep char(9) primary key,

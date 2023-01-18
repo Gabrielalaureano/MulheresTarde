@@ -17,7 +17,7 @@
                 Atividades
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="jumpp.php">Jumpp</a>
+                <a class="dropdown-item" href="pages/danc3a.php">Jumpp</a>
                 <a class="dropdown-item" href="Hidrojumpp.php">HidroJumpp</a>
                 <a class="dropdown-item" href="dança.php">Danças</a>
                 
