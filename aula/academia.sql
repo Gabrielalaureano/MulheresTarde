@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/01/2023 às 19:59
+-- Tempo de geração: 01/02/2023 às 17:42
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `academia` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `academia`;
-drop database if exists academia; 
+
 -- --------------------------------------------------------
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `aluno` (
 INSERT INTO `aluno` (`matricula`, `nome`, `telefone`, `sexo`, `cpf`, `rg`, `datanascimento`, `cep`, `numerocasa`, `complemento`, `foto`, `email`, `senha`, `status`) VALUES
 (1, 'Maria das Graças da Silva', '(21)99886-1055', 'F', '123456893-10', '12555', '2001-08-01', '23085-610', 31, 'ap 102', 'vazio', 'maria@gmail.com', '$2y$10$im0jB8.c.gP0PaUEdCH3B.4IwD8OqIjfT7Bdocr5AmxfYEYbvIecu', 'A'),
 (2, 'Pedro', '(21)99999-1055', 'M', '123456789-10', '00012', '1997-10-20', '26551-090', 100, 'fundos', 'vazio', 'pdro@gmail.com', '123', 'A'),
-(3, 'Priscila', '(21)99999-9999', 'F', '111.111.111-11', '6565656', '2000-01-01', '23085-610', 100, 'casa', 'fotos/63d810e68bfe6.png', 'priscila@gmail.com', '$2y$10$d7UaAkDuNw6klWSujVCABOQdwUe4OKhOCDgh7uUf7T5DZCCnc//Be', 'A');
+(3, 'Priscila', '(21)99999-9999', 'F', '111.111.111-11', '6565656', '2000-01-01', '23085-610', 100, 'casa', 'fotos/63d93f20ac9ea.png', 'priscila@gmail.com', '$2y$10$d7UaAkDuNw6klWSujVCABOQdwUe4OKhOCDgh7uUf7T5DZCCnc//Be', 'A');
 
 -- --------------------------------------------------------
 
@@ -122,6 +122,27 @@ INSERT INTO `aulaaluno` (`idaulaaluno`, `matricula`, `idaula`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `idcategoria` int(11) NOT NULL,
+  `nomecategoria` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `categoria`
+--
+
+INSERT INTO `categoria` (`idcategoria`, `nomecategoria`) VALUES
+(1, 'mochila'),
+(2, 'roupa'),
+(3, 'suplemento'),
+(4, 'acessórios');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `funcionario`
 --
 
@@ -181,16 +202,20 @@ CREATE TABLE `produto` (
   `cor` varchar(30) NOT NULL,
   `valor` double NOT NULL,
   `tamanho` char(2) NOT NULL,
-  `quantidade` int(11) NOT NULL
+  `quantidade` int(11) NOT NULL,
+  `idcategoria` int(11) NOT NULL,
+  `foto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Despejando dados para a tabela `produto`
 --
 
-INSERT INTO `produto` (`codigoproduto`, `nome`, `cor`, `valor`, `tamanho`, `quantidade`) VALUES
-(1, 'mochila Paloma', 'rosa', 150, 'un', 20),
-(2, 'mochila Raissa', 'azul', 120, 'un', 30);
+INSERT INTO `produto` (`codigoproduto`, `nome`, `cor`, `valor`, `tamanho`, `quantidade`, `idcategoria`, `foto`) VALUES
+(1, 'mochila Paloma', 'rosa', 150, 'un', 20, 1, ''),
+(2, 'mochila Raissa', 'azul', 120, 'un', 30, 1, ''),
+(3, 'mochila amanda', 'preta', 50.85, 'M', 30, 1, 'produtos/63d964567a504.jpg'),
+(4, 'mochila agatha', 'azul', 100.6, 'G', 10, 1, 'produtos/63d9649fb4542.jpg');
 
 -- --------------------------------------------------------
 
@@ -269,6 +294,12 @@ ALTER TABLE `aulaaluno`
   ADD KEY `idaula` (`idaula`);
 
 --
+-- Índices de tabela `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`idcategoria`);
+
+--
 -- Índices de tabela `funcionario`
 --
 ALTER TABLE `funcionario`
@@ -287,7 +318,8 @@ ALTER TABLE `habilitaprofessor`
 -- Índices de tabela `produto`
 --
 ALTER TABLE `produto`
-  ADD PRIMARY KEY (`codigoproduto`);
+  ADD PRIMARY KEY (`codigoproduto`),
+  ADD KEY `fk_categoria` (`idcategoria`);
 
 --
 -- Índices de tabela `professor`
@@ -333,6 +365,12 @@ ALTER TABLE `aulaaluno`
   MODIFY `idaulaaluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de tabela `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `idcategoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `habilitaprofessor`
 --
 ALTER TABLE `habilitaprofessor`
@@ -342,7 +380,7 @@ ALTER TABLE `habilitaprofessor`
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `codigoproduto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `codigoproduto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `professor`
@@ -380,6 +418,12 @@ ALTER TABLE `aulaaluno`
 ALTER TABLE `habilitaprofessor`
   ADD CONSTRAINT `habilitaprofessor_ibfk_1` FOREIGN KEY (`idatividade`) REFERENCES `atividade` (`idatividade`),
   ADD CONSTRAINT `habilitaprofessor_ibfk_2` FOREIGN KEY (`idprofessor`) REFERENCES `professor` (`idprofessor`);
+
+--
+-- Restrições para tabelas `produto`
+--
+ALTER TABLE `produto`
+  ADD CONSTRAINT `fk_categoria` FOREIGN KEY (`idcategoria`) REFERENCES `categoria` (`idcategoria`);
 
 --
 -- Restrições para tabelas `professor`
