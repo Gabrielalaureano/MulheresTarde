@@ -1,3 +1,14 @@
+<?php
+
+
+
+    if(!isset($_SESSION["quant"])){
+      $_SESSION["quant"] = 0;
+    }
+
+?>
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Academia</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#conteudoNavbarSuportado" aria-controls="conteudoNavbarSuportado" aria-expanded="false" aria-label="Alterna navegação">
@@ -40,6 +51,13 @@
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#login">
                            Área do Cliente
             </button>
+            <a href="frmcarrinho.php">
+            <img src="imagens/carrinho.png" style=width:50px;height:50px;></a>
+            <?php 
+              if($_SESSION["quant"]>0){
+                 echo $_SESSION["quant"]; 
+              }
+            ?>
          
           </form>
         </div>
@@ -93,4 +111,3 @@
     </div>
   </div>
 </div>
-      </nav>
