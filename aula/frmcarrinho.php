@@ -4,15 +4,15 @@
     require  'menu.php';
     include_once 'conexao.php';
 
-
+$totalcompra = 0;
 $sql = "SELECT * from carrinho"
 $resultado= $conn->prepare($sql);
 $resultado->execute();
 
 
-if(($resultado)and($resultado->RowCount()!=0)){
+if(($resultado)and($resultado->RowCount()!=0))
      ?>
-
+<form action="finaliza.php" method="post">
     <table class="table">
         <thead>
          <tr>
@@ -37,13 +37,13 @@ if(($resultado)and($resultado->RowCount()!=0)){
               <td><?php echo $nome ?></td>
               <td><?php echo $valor ?></td>
               <td><?php echo $quantcompra ?></td>
-              <td><?php echo $total =$quantcompra * $valor ?></td>
+              <td><?php echo $total =$quantcompra * $valor 
+              $totalcompra += $total; ?></td>
               
               <td>
 
-                
-                 <?php echo "<a href='excluirprod.php?codigo=$codigoproduto'>" ; ?>
-                 
+                                 
+                 <input type="hidden" name="codigo" value="<?php echo $codigoproduto; ?>">
                  <input type="submit" class="btn btn-danger" name="excluir" value="Excluir">
               </td>
             </tr>   
@@ -54,7 +54,11 @@ if(($resultado)and($resultado->RowCount()!=0)){
 <?php         
     } 
 ?>
+<tr><td><?php echo "Total da Compra".$totalcompra; ?></td></tr>
 </tbody>
 </table>
-}
+
+
+</form>
+<?php
 
