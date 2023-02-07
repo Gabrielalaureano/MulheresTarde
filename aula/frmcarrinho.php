@@ -5,7 +5,7 @@
     include_once 'conexao.php';
 
 $totalcompra = 0;
-$sql = "SELECT * from carrinho"
+$sql = "SELECT * from carrinho";
 $resultado= $conn->prepare($sql);
 $resultado->execute();
 
@@ -37,7 +37,7 @@ if(($resultado)and($resultado->RowCount()!=0))
               <td><?php echo $nome ?></td>
               <td><?php echo $valor ?></td>
               <td><?php echo $quantcompra ?></td>
-              <td><?php echo $total =$quantcompra * $valor 
+              <td><?php echo $total =$quantcompra * $valor; 
               $totalcompra += $total; ?></td>
               
               <td>

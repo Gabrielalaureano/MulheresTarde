@@ -1,7 +1,8 @@
 <?php   
 
-session_star();
-ob_star();
+session_start();
+ob_start();
+ require_once 'conexao.php';
 
 $_SESSION["quant"]+=1;
 
@@ -14,10 +15,10 @@ var_dump($cesta);
 
 
 $codigoproduto =$cesta["codigoproduto"];
-$quantcompra
+$quantcompra =0;
 
 
-$sql = "SELECT codigoproduto,nome,valor,quamtidade,foto
+$sql = "SELECT codigoproduto,nome,valor,quantidade,foto
 FROM produto
 WHERE codigoproduto = $codigoproduto LIMIT 1";
 
@@ -32,12 +33,12 @@ if(($resultado)and($resultado->RowCount()!=0)){
 
      if($quantidade<$quantcompra){
         echo "Sem estoque!";
-        header("location:index.php")
+        header("location:index.php");
      }
      else{
         $sql2 = "INSERT into carrinho(codigoproduto,nome,quantcompra,valor,foto)
         values(:codigoproduto,:nome,:quantcompra,:valor,:foto)";
-        $salvar2= $conn->prepare(sql2);
+        $salvar2= $conn->prepare($sql2);
         $salvar2->bindParam('codigoproduto', $codigoproduto, PDO::PARAM_INT);
         $salvar2->bindParam('nome', $nome, PDO::PARAM_STR);
         $salvar2->bindParam('quantcompra', $quantcompra, PDO::PARAM_INT);
