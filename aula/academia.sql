@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/02/2023 às 17:42
+-- Tempo de geração: 07/02/2023 às 21:06
 -- Versão do servidor: 10.4.24-MariaDB
 -- Versão do PHP: 8.1.6
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `academia`
+-- Banco de dados: `academia1`
 --
 CREATE DATABASE IF NOT EXISTS `academia` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `academia`;
@@ -122,6 +122,29 @@ INSERT INTO `aulaaluno` (`idaulaaluno`, `matricula`, `idaula`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `carrinho`
+--
+
+CREATE TABLE `carrinho` (
+  `codigoproduto` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `valor` double NOT NULL,
+  `quantcompra` int(11) NOT NULL,
+  `foto` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Despejando dados para a tabela `carrinho`
+--
+
+INSERT INTO `carrinho` (`codigoproduto`, `nome`, `valor`, `quantcompra`, `foto`) VALUES
+(6, 'Vitamina D', 15, 3, 'produtos/63dbe3b8c5142.jpg'),
+(5, 'Vitamina E', 25, 3, 'produtos/63dbe37e4d29f.jpg'),
+(6, 'Vitamina D', 15, 3, 'produtos/63dbe3b8c5142.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `categoria`
 --
 
@@ -193,6 +216,19 @@ INSERT INTO `habilitaprofessor` (`idhabilitacao`, `idatividade`, `idprofessor`) 
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `item`
+--
+
+CREATE TABLE `item` (
+  `iditem` int(11) NOT NULL,
+  `idvenda` int(11) NOT NULL,
+  `codigoproduto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `produto`
 --
 
@@ -212,10 +248,16 @@ CREATE TABLE `produto` (
 --
 
 INSERT INTO `produto` (`codigoproduto`, `nome`, `cor`, `valor`, `tamanho`, `quantidade`, `idcategoria`, `foto`) VALUES
-(1, 'mochila Paloma', 'rosa', 150, 'un', 20, 1, ''),
-(2, 'mochila Raissa', 'azul', 120, 'un', 30, 1, ''),
+(1, 'mochila Paloma', 'rosa', 150, 'un', 20, 1, 'produtos/63daa69add605.jpg'),
+(2, 'mochila Raissa', 'azul', 120, 'un', 30, 2, 'produtos/63daa6af278c1.jpg'),
 (3, 'mochila amanda', 'preta', 50.85, 'M', 30, 1, 'produtos/63d964567a504.jpg'),
-(4, 'mochila agatha', 'azul', 100.6, 'G', 10, 1, 'produtos/63d9649fb4542.jpg');
+(4, 'mochila agatha', 'azul', 100.6, 'G', 10, 1, 'produtos/63d9649fb4542.jpg'),
+(5, 'Vitamina E', 'un', 25, 'un', 30, 3, 'produtos/63dbe37e4d29f.jpg'),
+(6, 'Vitamina D', 'un', 15, 'un', 50, 3, 'produtos/63dbe3b8c5142.jpg'),
+(7, 'Vitamina e Minerais', 'un', 60, 'un', 10, 3, 'produtos/63dc5048880df.jpg'),
+(8, 'Vitamina Força', 'un', 120, 'un', 50, 3, 'produtos/63dbe42c614a2.jpg'),
+(9, 'Whein Protein 1', 'un', 100, 'un', 20, 3, 'produtos/63dbe5331d643.jpg'),
+(10, 'Whey Creatina', 'un', 100, 'un', 20, 3, 'produtos/63dbe55a08dd7.jpg');
 
 -- --------------------------------------------------------
 
@@ -247,18 +289,16 @@ CREATE TABLE `venda` (
   `idvenda` int(11) NOT NULL,
   `data` date NOT NULL,
   `valor` double NOT NULL,
-  `quantidade` int(11) NOT NULL,
-  `codigoproduto` int(11) NOT NULL,
-  `cpffuncionario` char(14) NOT NULL
+  `matricula` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Despejando dados para a tabela `venda`
 --
 
-INSERT INTO `venda` (`idvenda`, `data`, `valor`, `quantidade`, `codigoproduto`, `cpffuncionario`) VALUES
-(1, '2022-12-05', 300, 2, 1, '789'),
-(2, '2022-12-05', 120, 1, 2, '789');
+INSERT INTO `venda` (`idvenda`, `data`, `valor`, `matricula`) VALUES
+(3, '2023-02-07', 45, 1),
+(4, '2023-02-07', 165, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -315,6 +355,14 @@ ALTER TABLE `habilitaprofessor`
   ADD KEY `idprofessor` (`idprofessor`);
 
 --
+-- Índices de tabela `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`iditem`),
+  ADD KEY `fk_produto` (`codigoproduto`),
+  ADD KEY `fk_venda` (`idvenda`);
+
+--
 -- Índices de tabela `produto`
 --
 ALTER TABLE `produto`
@@ -333,8 +381,7 @@ ALTER TABLE `professor`
 --
 ALTER TABLE `venda`
   ADD PRIMARY KEY (`idvenda`),
-  ADD KEY `codigoproduto` (`codigoproduto`),
-  ADD KEY `cpffuncionario` (`cpffuncionario`);
+  ADD KEY `cpffuncionario` (`matricula`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -377,10 +424,16 @@ ALTER TABLE `habilitaprofessor`
   MODIFY `idhabilitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de tabela `item`
+--
+ALTER TABLE `item`
+  MODIFY `iditem` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de tabela `produto`
 --
 ALTER TABLE `produto`
-  MODIFY `codigoproduto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `codigoproduto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `professor`
@@ -392,7 +445,7 @@ ALTER TABLE `professor`
 -- AUTO_INCREMENT de tabela `venda`
 --
 ALTER TABLE `venda`
-  MODIFY `idvenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idvenda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para tabelas despejadas
@@ -420,6 +473,13 @@ ALTER TABLE `habilitaprofessor`
   ADD CONSTRAINT `habilitaprofessor_ibfk_2` FOREIGN KEY (`idprofessor`) REFERENCES `professor` (`idprofessor`);
 
 --
+-- Restrições para tabelas `item`
+--
+ALTER TABLE `item`
+  ADD CONSTRAINT `fk_produto` FOREIGN KEY (`codigoproduto`) REFERENCES `produto` (`codigoproduto`),
+  ADD CONSTRAINT `fk_venda` FOREIGN KEY (`idvenda`) REFERENCES `venda` (`idvenda`);
+
+--
 -- Restrições para tabelas `produto`
 --
 ALTER TABLE `produto`
@@ -435,8 +495,7 @@ ALTER TABLE `professor`
 -- Restrições para tabelas `venda`
 --
 ALTER TABLE `venda`
-  ADD CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`codigoproduto`) REFERENCES `produto` (`codigoproduto`),
-  ADD CONSTRAINT `venda_ibfk_2` FOREIGN KEY (`cpffuncionario`) REFERENCES `funcionario` (`cpffuncionario`);
+  ADD CONSTRAINT `fk_aluno` FOREIGN KEY (`matricula`) REFERENCES `aluno` (`matricula`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

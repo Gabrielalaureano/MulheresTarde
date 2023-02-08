@@ -1,173 +1,107 @@
 <?php
-  require_once 'head.php';
-  require_once 'menu.php';
-  ?>
+   
+    require_once 'head.php';
+    require  'menu.php';
+    include_once 'conexao.php';
 
-''
-<div class="container-fluid">
+    $pagatual = filter_input(INPUT_GET, "page", FILTER_SANITIZE_NUMBER_INT);
+	$pag = (!empty($pagatual)) ? $pagatual : 1;
+
+    $limitereg = 6;
+
+    $inicio = ($limitereg * $pag) - $limitereg;
+
+    $busca= "SELECT p.codigoproduto,p.nome,p.valor,p.foto
+    FROM produto p,categoria c WHERE 
+    c.idcategoria = p.idcategoria and
+    c.nomecategoria = 'acessórios' and
+    p.quantidade > 0 LIMIT $inicio , $limitereg";
+
+    $resultado = $conn->prepare($busca);
+    $resultado->execute();  
+       
+       
+?>
+
+<div class="container-fluid imagens">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h2>Collection Gym</h2>
-            </div>
-        </div>
-    </div>
+            <h2>Acessórios</h2>
+         </div>
 
-    <div class="container-fluid imagens">
-        <div class="row">
-            <div class="col-md-3">
-                    <div class="card" style="width: 16rem;">
-                        <img class="card-img-top" src="imagens/diversos01.jpg" >
-                        <div class="card-body">
-                            <h3 class="card-text">Barras rolantes</h3>
-                            <h5> R$ 99,00</h5>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
-                            data-target="#barras">
-                                COMPRAR
-                            </button>
-                           
-  
-                        </div>
-                 </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card" style="width: 16rem;">
-                    <img class="card-img-top" src="imagens/diversos02.jpg" >
-                    <div class="card-body">
-                        <h3 class="card-text"> Conjunto garrafas</h3>
-                        <h5> R$ 150,00</h5>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" 
-                        data-target="#garrafas">
-                                COMPRAR
+        <?php
+        if (($resultado) AND ($resultado->rowCount() != 0)){
+        while ($linha = $resultado->fetch(PDO::FETCH_ASSOC)) {
+           
+            extract($linha);             
+        
+        ?>    
+            <div class="col-md-4">
+                <div class="card" style="width: 25rem;">
+                    <img class="card-img-top" src="<?php echo $foto; ?>">
+                    <div class="card-body text-center">
+                        <h3 class="card-text"><?php echo $nome; ?></h3>
+                        <h4>Preço R$ <?php echo $valor; ?>,00</h4>
+                        <form action="carrinho.php" method="post">
+                       <h5>
+                        <label>Quant</label>
+                        <input type="number" name="quantcompra" value="1" style=width:45px;>
+                        </h5>
+                        <input type="hidden" name="codigoproduto" value="<?php echo $codigoproduto; ?>">
+                           <input type="submit" class="btn btn-primary" value="comprar">
                             </button>
                     </div>
-                </div>
+                </div> 
             </div>
-
-
-
-            <div class="col-md-3">
-                <div class="card" style="width: 16rem;">
-                    <img class="card-img-top" src="imagens/diversos03.jpg" >
-                        <div class="card-body">
-                            <h3 class="card-text">Cama Elastíca</h3>
-                            <h5> R$ 250,00</h5>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
-                            data-target="#cama">
-                                COMPRAR
-                            </button>
-                        </div>
-                </div>
-         </div>
-
-         <div class="col-md-3">
-                <div class="card" style="width: 16rem;">
-                    <img class="card-img-top" src="imagens/diversos04.jpg" >
-                        <div class="card-body">
-                            <h3 class="card-text">Cama Elastíca</h3>
-                            <h5> R$ 250,00</h5>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" 
-                            data-target="#jumpp">
-                                COMPRAR
-                            </button>
-                        </div>
-                </div>
-         </div>
-
-         
+        
+    <?php         
+    } 
+}
+?>
 
 </div>
 </div>
 
+<?php
+     //Contar os registros no banco
+     $qtregistro = "SELECT COUNT(codigoproduto) AS registros FROM produto";
+     $resultado = $conn->prepare($qtregistro);
+     $resultado->execute();
+     $resposta = $resultado->fetch(PDO::FETCH_ASSOC);
 
-<!-- Modal -->
-<div class="modal fade" id="barras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Barras para exercícios </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img class="img-fluid" src="imagens/diversos01.jpg" alt="imagem capa do card">
-        <p>barras para exercicios em casa.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Adicionar ao carrinho</button>
-      </div>
-    </div>
-  </div>
-</div>
-  <!--modal2-->
-<div class="modal fade" id="garrafas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Conjunto de garrafas</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img class="img-fluid" src="imagens/diversos02.jpg" alt="imagem capa do card">
-        <p>Conjunto de garrafas na cor lílas.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Adicionar ao carrinho</button>
-      </div>
-    </div>
-  </div>
-</div>
+     //Quantidade de página que serão usadas - quantidade de registros
+     //dividido pela quantidade de registro por página
+     $qnt_pagina = ceil($resposta['registros'] / $limitereg);
 
- <!--modal 3-->
- <div class="modal fade" id="cama" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Cama Elastíca</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img class="img-fluid" src="imagens/diversos03.jpg" alt="imagem capa do card">
-        <p>Cama Elastica para jump.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Adicionar ao carrinho</button>
-      </div>
-    </div>
-  </div>
-</div>
+      // Maximo de links      
+      $maximo = 2;
 
- <!--modal 4-->
- <div class="modal fade" id="jumpp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Trampolim jumpp</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img class="img-fluid" src="imagens/diversos04.jpg" alt="imagem capa do card">
-        <p> Trampolim jumpp oxer aço. </P>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Adicionar ao carrinho</button>
-      </div>
-    </div>
-  </div>
-</div>
+      echo "<a href='relprodutos.php?page=1'>Primeira</a> ";
+    // Chamar página anterior verificando a quantidade de páginas menos 1 e 
+    // também verificando se já não é primeira página
+    for ($anterior = $pag - $maximo; $anterior <= $pag - 1; $anterior++) {
+        if ($anterior >= 1) {
+            echo "  <a href='relprodutos.php?page=$anterior'>$anterior</a> ";
+        }
+    }
+
+    //Mostrar a página ativa
+    echo "$pag";
+
+    //Chamar próxima página, ou seja, verificando a página ativa e acrescentando 1
+    // a ela
+    for ($proxima = $pag + 1; $proxima <= $pag + $maximo; $proxima++) {
+        if ($proxima <= $qnt_pagina) {
+            echo "<a href='relprodutos.php?page=$proxima'>$proxima</a> ";
+        }
+    }
+
+    echo "<a href='relprodutos.php?page=$qnt_pagina'>Última</a> ";
 
 
-    <?php
-    require_once 'footer.php';
+?>
+
+<?php
+        require_once 'footer.php';
+
     ?>

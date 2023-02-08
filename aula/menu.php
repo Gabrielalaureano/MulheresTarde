@@ -52,7 +52,7 @@
                            Área do Cliente
             </button>
             <a href="frmcarrinho.php">
-            <img src="imagens/carrinho.png" style=width:50px;height:50px;></a>
+            <img src="imagens/shopping-cart.png" style=width:50px;height:50px;></a>
             <?php 
               if($_SESSION["quant"]>0){
                  echo $_SESSION["quant"]; 

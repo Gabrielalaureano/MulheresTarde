@@ -1,7 +1,7 @@
 <?php
     require_once 'head.php'; 
-    require_once 'conexao.php';
     require_once 'menu.php';
+    require_once 'conexao.php';
 
     $sql = "SELECT * from categoria";
     $resultado=$conn->prepare($sql);
@@ -105,5 +105,5 @@
 </form>
 
 <?php
-    require_once 'footeradmin.php';
+    require_once 'footer.php';
 ?>
